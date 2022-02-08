@@ -53,15 +53,45 @@ export const LoginContent = styled.div`
   width: 80%;
   max-width: 350px;
   padding: 2rem 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 `
 
 export const Form = styled.form`
   width: 100%;
-
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   
+`
+
+export const ForgotPasswordButton = styled.button`
+  background: transparent;
+  border: none;
+  margin-top: .25rem;
+  font-size: 12px;
+  color: var(--gray-600);
+  transition: color 300ms;
+
+  &:hover {
+    color: var(--primary);
+  }
+`
+
+export const CreateAccountButton = styled.button`
+  background: transparent;
+  border: none;
+  margin-top: 1.25rem;
+  font-size: 1.25rem;
+  color: var(--primary);
+  transition: filter 300ms;
+
+  &:hover {
+    filter: brightness(.9);
+  }
 `
 
 export const InputContainer = styled.div`
@@ -75,7 +105,42 @@ export const InputContainer = styled.div`
 export const Input = styled.input`
   width: 100%;
 `
+export const DividerContainer = styled.div`
+  position: relative;
+  width: 330px;
+  height: 20px;
+  
 
-export const FormInputButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
 
+export const DividerRow = styled.div`
+  width: 100%;
+  height: 2px;
+  background-color: var(--background-color-bar);
+
+  
+`
+
+export const DividerText = styled.span`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 30px;
+  color: var(--gray-200);
+  text-align: center;
+  background-color: var(--background-color);
+
+  display: inline-block;
+`
+
+export const SocialButtonContainer = styled.div`
+  width: 330px;
+  margin-top: 2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `

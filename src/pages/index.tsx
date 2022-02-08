@@ -4,6 +4,7 @@ import Logo from '../assets/TechAcademy.svg'
 import CodeImage from '../assets/code-image.svg'
 
 import { InputForm } from '../components/InputForm'
+import { SimpleButton } from '../components/SimpleButton'
 
 import {
   Container,
@@ -13,9 +14,15 @@ import {
   Header,
   LoginContent,
   Form,
+  ForgotPasswordButton,
   InputContainer,
-  FormInputButton
+  CreateAccountButton,
+  DividerContainer,
+  DividerRow,
+  DividerText,
+  SocialButtonContainer
 } from '../styles/home'
+import { SocialButton } from '../components/SocialButton'
 
 const Home: NextPage = () => {
   return (
@@ -41,12 +48,31 @@ const Home: NextPage = () => {
               <InputForm type='password' placeholder='Senha' />
             </InputContainer>
 
-            <FormInputButton>Entrar</FormInputButton>
+            <SimpleButton
+              title='Entrar'
+            />
           </Form>
+
+          <ForgotPasswordButton>
+            Esqueci a senha
+          </ForgotPasswordButton>
+
+          <CreateAccountButton>
+            Criar uma conta
+          </CreateAccountButton>
 
         </LoginContent>
 
+        <DividerContainer>
+          <DividerRow />
+          <DividerText>ou</DividerText>
+        </DividerContainer>
 
+        <SocialButtonContainer>
+          <SocialButton type='github' />
+          <SocialButton type='google' />
+          <SocialButton type='twitch' />
+        </SocialButtonContainer>
 
       </LoginContainer>
     </Container>
