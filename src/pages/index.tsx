@@ -1,11 +1,22 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+
+import {
+  Container,
+  ImageContainer,
+  LoginContainer
+} from '../styles/home'
 
 const Home: NextPage = () => {
   return (
-    <h1>Tech</h1>
+    <Container>
+      <ImageContainer id='image-container'>
+
+      </ImageContainer>
+
+      <LoginContainer>
+
+      </LoginContainer>
+    </Container>
   )
 }
 
