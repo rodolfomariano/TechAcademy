@@ -3,4 +3,10 @@ const nextConfig = {
   reactStrictMode: true,
 }
 
-module.exports = nextConfig
+module.exports = {
+  nextConfig,
+  experimental: {
+    // ssr and displayName are configured by default
+    styledComponents: true,
+  },
+}
