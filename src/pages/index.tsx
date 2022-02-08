@@ -1,10 +1,12 @@
 import type { NextPage } from 'next'
+import { useRouter } from 'next/router'
 
 import Logo from '../assets/TechAcademy.svg'
 import CodeImage from '../assets/code-image.svg'
 
 import { InputForm } from '../components/InputForm'
 import { SimpleButton } from '../components/SimpleButton'
+import { SocialButton } from '../components/SocialButton'
 
 import {
   Container,
@@ -22,9 +24,15 @@ import {
   DividerText,
   SocialButtonContainer
 } from '../styles/home'
-import { SocialButton } from '../components/SocialButton'
 
 const Home: NextPage = () => {
+
+  const router = useRouter()
+
+  function handleGoToSignUpPage() {
+    router.push('/signup')
+  }
+
   return (
     <Container>
       <ImageContainer id='image-container'>
@@ -57,7 +65,9 @@ const Home: NextPage = () => {
             Esqueci a senha
           </ForgotPasswordButton>
 
-          <CreateAccountButton>
+          <CreateAccountButton
+            onClick={handleGoToSignUpPage}
+          >
             Criar uma conta
           </CreateAccountButton>
 
