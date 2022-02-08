@@ -13,6 +13,7 @@
   --red: #C87373;
   --gold: #C4B739;
   --green: #0DD25C;
+  --blue: #6C63FF;
 
   --divider-color: rgba(0, 0, 0, .2);
   --inactive-button-color: rgba(112, 120, 134, .7);
@@ -48,11 +49,17 @@ body {
 
 body, input, textarea, select, button {
   font: 400 1rem "Roboto", sans-serif;
+  
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Nunito', sans-serif;
 }
 
 button {
   font-family: 'Nunito', sans-serif;
   cursor: pointer;
+  color: inherit;
 }
 
 a {
