@@ -1,4 +1,6 @@
+import { createRef, useRef, useState } from 'react'
 import { useRouter } from 'next/router'
+import ReCAPTCHA from "react-google-recaptcha"
 
 import Logo from '../../assets/TechAcademy.svg'
 import CodeImage from '../../assets/code-image-2.svg'
@@ -21,15 +23,21 @@ import {
   UseTerms,
   Politics
 } from './styles'
-import { useState } from 'react'
 
 export default function Signup() {
-  const [token, setToken] = useState('')
+  const [recaptcha, setRecaptcha] = useState('')
+
+  const recaptchaRef = useRef(null)
+  const key = process.env.NEXT_PUBLIC_RECAPCHA_KEY as string
 
   const router = useRouter()
 
   function handleGoToHome() {
     router.push('/')
+  }
+
+  function handleCaptureRecaptcha(value: string) {
+    setRecaptcha(value)
   }
 
   return (
@@ -57,6 +65,13 @@ export default function Signup() {
               <InputForm type='password' placeholder='Digite uma senha' />
               <InputForm type='password' placeholder='Confirme a senha' />
             </InputContainer>
+
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              size="normal"
+              sitekey={key}
+              onChange={e => handleCaptureRecaptcha(e as string)}
+            />
 
             <Terms>
               Ao se registrar, você aceita nossos <UseTerms>termos de uso </UseTerms> <br />
