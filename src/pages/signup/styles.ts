@@ -99,3 +99,33 @@ export const InputContainer = styled.div`
 export const Input = styled.input`
   width: 100%;
 `
+
+export const Terms = styled.p`
+  font-size: 13px;
+  color: var(--gray-400);
+  text-align: center;
+`
+
+export const UseTerms = styled.button`
+  background: transparent;
+  border: none;
+  color: var(--primary-low);
+  font-weight: 500;
+  transition: color 300ms;
+
+  &:hover {
+    color: var(--primary);
+  }
+`
+
+export const Politics = styled.button`
+  background: transparent;
+  border: none;
+  color: var(--primary-low);
+  font-weight: 500;
+  transition: color 300ms;
+
+  &:hover {
+    color: var(--primary);
+  }
+`

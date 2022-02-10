@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router'
-import { GoogleReCaptchaProvider, GoogleReCaptcha } from 'react-google-recaptcha-v3'
 
 import Logo from '../../assets/TechAcademy.svg'
 import CodeImage from '../../assets/code-image-2.svg'
@@ -18,7 +17,9 @@ import {
   HaveAccountText,
   HaveAccountButton,
   InputContainer,
-
+  Terms,
+  UseTerms,
+  Politics
 } from './styles'
 import { useState } from 'react'
 
@@ -32,59 +33,57 @@ export default function Signup() {
   }
 
   return (
-    <GoogleReCaptchaProvider
-      reCaptchaKey={process.env.NEXT_PUBLIC_RECAPCHA_KEY}
-    >
-      <Container>
-        <ImageContainer id='image-container'>
-          <Logo />
-          <CodeImage />
+    <Container>
+      <ImageContainer id='image-container'>
+        <Logo />
+        <CodeImage />
 
-          <Text>
-            Crie uma conta e desfrute tudo o que <br ></br>
-            podemos oferecer
-          </Text>
+        <Text>
+          Crie uma conta e desfrute tudo o que <br ></br>
+          podemos oferecer
+        </Text>
 
-        </ImageContainer>
+      </ImageContainer>
 
-        <LoginContainer>
-          <Header>Login</Header>
+      <LoginContainer>
+        <Header>Login</Header>
 
-          <LoginContent>
-            <Form>
-              <InputContainer>
-                <InputForm type='text' placeholder='Digite seu nome' />
-                <InputForm type='email' placeholder='Digite um email' />
-                <InputForm type='email' placeholder='Confirme o email' />
-                <InputForm type='password' placeholder='Digite uma senha' />
-                <InputForm type='password' placeholder='Confirme a senha' />
-              </InputContainer>
+        <LoginContent>
+          <Form>
+            <InputContainer>
+              <InputForm type='text' placeholder='Digite seu nome' />
+              <InputForm type='email' placeholder='Digite um email' />
+              <InputForm type='email' placeholder='Confirme o email' />
+              <InputForm type='password' placeholder='Digite uma senha' />
+              <InputForm type='password' placeholder='Confirme a senha' />
+            </InputContainer>
 
-              <SimpleButton
-                title='Criar conta'
-              />
-            </Form>
+            <Terms>
+              Ao se registrar, você aceita nossos <UseTerms>termos de uso </UseTerms> <br />
+              e a nossa <Politics>política de privacidade</Politics>.
+            </Terms>
 
-            <HaveAccountText>
-              Já tem uma conta? Faça o
-
-              <HaveAccountButton
-                onClick={handleGoToHome}
-              >
-                Login
-              </HaveAccountButton>
-
-            </HaveAccountText>
-
-            <GoogleReCaptcha
-              onVerify={token => setToken(token)}
+            <SimpleButton
+              title='Criar conta'
             />
+          </Form>
 
-          </LoginContent>
+          <HaveAccountText>
+            Já tem uma conta? Faça o
+
+            <HaveAccountButton
+              onClick={handleGoToHome}
+            >
+              Login
+            </HaveAccountButton>
+
+          </HaveAccountText>
 
 
-        </LoginContainer>
-      </Container>
-    </GoogleReCaptchaProvider>
+        </LoginContent>
+
+
+      </LoginContainer>
+    </Container>
   )
 }
