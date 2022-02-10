@@ -1,12 +1,15 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
+import { useFirebaseAuth } from '../hooks/auth'
+
 import Logo from '../assets/TechAcademy.svg'
 import CodeImage from '../assets/code-image.svg'
 
 import { InputForm } from '../components/InputForm'
 import { SimpleButton } from '../components/SimpleButton'
 import { SocialButton } from '../components/SocialButton'
+
 
 import {
   Container,
@@ -24,14 +27,22 @@ import {
   DividerText,
   SocialButtonContainer
 } from '../styles/home'
+import { useState } from 'react'
 
 const Home: NextPage = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const { signInWithGoogle, signInWithGitHub } = useFirebaseAuth()
 
   const router = useRouter()
 
   function handleGoToSignUpPage() {
     router.push('/signup')
   }
+
+
+
 
   return (
     <Container>
@@ -52,6 +63,7 @@ const Home: NextPage = () => {
         <LoginContent>
           <Form>
             <InputContainer>
+
               <InputForm type='email' placeholder='Email' />
               <InputForm type='password' placeholder='Senha' />
             </InputContainer>
@@ -79,9 +91,8 @@ const Home: NextPage = () => {
         </DividerContainer>
 
         <SocialButtonContainer>
-          <SocialButton type='github' />
-          <SocialButton type='google' />
-          <SocialButton type='twitch' />
+          <SocialButton type='github' onClick={signInWithGitHub} />
+          <SocialButton type='google' onClick={signInWithGoogle} />
         </SocialButtonContainer>
 
       </LoginContainer>

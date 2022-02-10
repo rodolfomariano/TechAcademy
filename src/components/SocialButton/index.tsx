@@ -1,21 +1,31 @@
 
 import { AiOutlineGithub, AiOutlineGoogle } from 'react-icons/ai'
-import { FiTwitch } from 'react-icons/fi'
+import { CgMicrosoft } from 'react-icons/cg'
 
 import {
   Container
 } from './styles'
 
 interface SocialButtonProps {
-  type: 'github' | 'google' | 'twitch'
+  type: 'github' | 'google'
+  onClick?: () => void
 }
 
-export function SocialButton({ type }: SocialButtonProps) {
+export function SocialButton({ type, onClick }: SocialButtonProps) {
   return (
-    <Container>
-      {type === 'github' && <AiOutlineGithub size={20} />}
-      {type === 'google' && <AiOutlineGoogle size={20} />}
-      {type === 'twitch' && <FiTwitch size={20} />}
+    <Container onClick={onClick}>
+      {type === 'github' && (
+        <>
+          <AiOutlineGithub size={20} />
+          GitHub
+        </>
+      )}
+      {type === 'google' && (
+        <>
+          <AiOutlineGoogle size={20} />
+          Google
+        </>
+      )}
     </Container>
   )
 }

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Container = styled.button`
-  width: 100px;
+  width: 100%;
   background: transparent;
   box-shadow: 0 0 2px var(--inactive-button-color);
   padding: .5rem 0;
@@ -12,7 +12,9 @@ export const Container = styled.button`
 
   display: flex;
   align-items: center;
+  flex-direction: column;
   justify-content: center;
+  gap: .25rem;
 
   &:hover {
     background-color: var(--primary);
