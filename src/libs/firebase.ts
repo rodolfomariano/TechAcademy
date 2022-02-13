@@ -20,14 +20,11 @@ googleProvider.setCustomParameters({ prompt: 'select_account' })
 export const gitHubProvider = new GithubAuthProvider();
 googleProvider.setCustomParameters({ prompt: 'select_account' })
 
-export const microsoftProvider = new OAuthProvider('microsoft.com')
-microsoftProvider.setCustomParameters({
-  prompt: 'consent',
-  tenant: '0708dc82-335a-4ec0-a521-53ad57f497a4'
-})
+// export const microsoftProvider = new OAuthProvider('microsoft.com')
+// microsoftProvider.setCustomParameters({
+//   prompt: 'consent',
+//   tenant: '0708dc82-335a-4ec0-a521-53ad57f497a4'
+// })
 
-console.log(microsoftProvider)
+// console.log(microsoftProvider)
 
-export function signup(email: string, password: string) {
-  return createUserWithEmailAndPassword(auth, email, password)
-}

@@ -1,4 +1,9 @@
+import { HTMLProps, InputHTMLAttributes } from 'react'
 import styled from 'styled-components'
+
+interface InputFormProps extends HTMLProps<HTMLInputElement> {
+
+}
 
 export const Container = styled.div`
   border-bottom: 2px solid var(--gray-300);

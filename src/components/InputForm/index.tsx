@@ -1,5 +1,5 @@
 
-import { ChangeEvent, FormEvent, HTMLProps, useState } from 'react'
+import { ChangeEvent, FormEvent, HTMLProps, InputHTMLAttributes, useState } from 'react'
 import { AiOutlineMail, AiOutlineEye, AiOutlineEyeInvisible, AiOutlineLock, AiOutlineUser } from 'react-icons/ai'
 
 import {
@@ -8,7 +8,7 @@ import {
   Button
 } from './styles'
 
-interface InputFormProps extends HTMLProps<HTMLInputElement> {
+interface InputFormProps extends InputHTMLAttributes<HTMLInputElement> {
   type: 'text' | 'password' | 'email'
   placeholder: string
 }
@@ -41,6 +41,7 @@ export function InputForm({ type, placeholder, ...rest }: InputFormProps) {
           borderColor: inputValue.length > 0 ? '#5CB1CE' : '#707886'
         }}
         type={type === 'password' && seePassword ? 'text' : type}
+        {...rest}
       />
 
       {type === 'password' && (

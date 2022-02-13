@@ -27,13 +27,13 @@ import {
   DividerText,
   SocialButtonContainer
 } from '../styles/home'
-import { useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 
 const Home: NextPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const { signInWithGoogle, signInWithGitHub } = useFirebaseAuth()
+  const { signInWithGoogle, signInWithGitHub, signInWithEmail } = useFirebaseAuth()
 
   const router = useRouter()
 
@@ -42,6 +42,11 @@ const Home: NextPage = () => {
   }
 
 
+  function handleSignInWithEmail(e: FormEvent) {
+    e.preventDefault()
+
+    signInWithEmail(email, password)
+  }
 
 
   return (
@@ -64,12 +69,21 @@ const Home: NextPage = () => {
           <Form>
             <InputContainer>
 
-              <InputForm type='email' placeholder='Email' />
-              <InputForm type='password' placeholder='Senha' />
+              <InputForm
+                type='email'
+                placeholder='Email'
+                onChange={(e: FormEvent<HTMLInputElement>) => setEmail(e.currentTarget.value)}
+              />
+              <InputForm
+                type='password'
+                placeholder='Senha'
+                onChange={(e: FormEvent<HTMLInputElement>) => setPassword(e.currentTarget.value)}
+              />
             </InputContainer>
 
             <SimpleButton
               title='Entrar'
+              onClick={handleSignInWithEmail}
             />
           </Form>
 

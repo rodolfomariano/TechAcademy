@@ -1,9 +1,12 @@
-import { createRef, useRef, useState } from 'react'
+import { createRef, FormEvent, useRef, useState } from 'react'
 import { useRouter } from 'next/router'
 import ReCAPTCHA from "react-google-recaptcha"
+import * as yup from 'yup'
 
 import Logo from '../../assets/TechAcademy.svg'
 import CodeImage from '../../assets/code-image-2.svg'
+
+import { useFirebaseAuth } from '../../hooks/auth'
 
 import { InputForm } from '../../components/InputForm'
 import { SimpleButton } from '../../components/SimpleButton'
@@ -25,7 +28,22 @@ import {
 } from './styles'
 
 export default function Signup() {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [emailConfirm, setEmailConfirm] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordConfirm, setPasswordConfirm] = useState('')
   const [recaptcha, setRecaptcha] = useState('')
+
+  const { signUp } = useFirebaseAuth()
+
+  const schema = yup.object().shape({
+    name: yup.string().required(),
+    email: yup.string().email('Email invalido').required('Email é obrigatório'),
+    emailConfirm: yup.string().oneOf([null, yup.ref('email')], 'Os emails não batem'),
+    password: yup.string().min(6, 'No minimo 6 caracteres').required(),
+    passwordConfirm: yup.string().oneOf([null, yup.ref('password')], 'As senhas precisam ser iguais')
+  })
 
   const recaptchaRef = useRef(null)
   const key = process.env.NEXT_PUBLIC_RECAPCHA_KEY as string
@@ -39,6 +57,17 @@ export default function Signup() {
   function handleCaptureRecaptcha(value: string) {
     setRecaptcha(value)
   }
+
+  function handleCreateAccount(e: FormEvent) {
+    e.preventDefault()
+
+
+
+    // signUp('rodolfom@gmail.com', '123456')
+  }
+
+
+  console.log(name)
 
   return (
     <Container>
@@ -54,16 +83,36 @@ export default function Signup() {
       </ImageContainer>
 
       <LoginContainer>
-        <Header>Login</Header>
+        <Header>Criar uma conta</Header>
 
         <LoginContent>
           <Form>
             <InputContainer>
-              <InputForm type='text' placeholder='Digite seu nome' />
-              <InputForm type='email' placeholder='Digite um email' />
-              <InputForm type='email' placeholder='Confirme o email' />
-              <InputForm type='password' placeholder='Digite uma senha' />
-              <InputForm type='password' placeholder='Confirme a senha' />
+              <InputForm
+                type='text'
+                placeholder='Digite seu nome'
+                onChange={(e: FormEvent<HTMLInputElement>) => setName(e.currentTarget.value)}
+              />
+              <InputForm
+                type='email'
+                placeholder='Digite um email'
+                onChange={(e: FormEvent<HTMLInputElement>) => setEmail(e.currentTarget.value)}
+              />
+              <InputForm
+                type='email'
+                placeholder='Confirme o email'
+                onChange={(e: FormEvent<HTMLInputElement>) => setEmailConfirm(e.currentTarget.value)}
+              />
+              <InputForm
+                type='password'
+                placeholder='Digite uma senha'
+                onChange={(e: FormEvent<HTMLInputElement>) => setPassword(e.currentTarget.value)}
+              />
+              <InputForm
+                type='password'
+                placeholder='Confirme a senha'
+                onChange={(e: FormEvent<HTMLInputElement>) => setPasswordConfirm(e.currentTarget.value)}
+              />
             </InputContainer>
 
             <ReCAPTCHA
@@ -80,6 +129,7 @@ export default function Signup() {
 
             <SimpleButton
               title='Criar conta'
+              onClick={handleCreateAccount}
             />
           </Form>
 
@@ -99,6 +149,7 @@ export default function Signup() {
 
 
       </LoginContainer>
+
     </Container>
   )
 }
