@@ -131,3 +131,9 @@ export const Politics = styled.button`
     color: var(--primary);
   }
 `
+
+export const SpanRecapcha = styled.span`
+  font-size: 12px;
+  color: var(--red);
+  margin-top: -1rem;
+`

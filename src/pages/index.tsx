@@ -33,7 +33,7 @@ const Home: NextPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const { signInWithGoogle, signInWithGitHub, signInWithEmail } = useFirebaseAuth()
+  const { signInWithGoogle, signInWithGitHub, signInWithEmail, loading } = useFirebaseAuth()
 
   const router = useRouter()
 
@@ -84,6 +84,7 @@ const Home: NextPage = () => {
             <SimpleButton
               title='Entrar'
               onClick={handleSignInWithEmail}
+              disabled={loading}
             />
           </Form>
 

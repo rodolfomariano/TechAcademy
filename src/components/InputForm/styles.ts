@@ -44,3 +44,9 @@ export const Button = styled.button`
   align-items: center;
   justify-content: center;
 `
+
+export const SpanError = styled.span`
+  font-size: 12px;
+  color: var(--red);
+  margin-top: -1rem;
+`

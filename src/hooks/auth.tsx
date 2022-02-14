@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext } from 'react'
+import { createContext, ReactNode, useContext, useState } from 'react'
 
 import { toast } from 'react-toastify'
 
@@ -13,6 +13,7 @@ import {
 } from 'firebase/auth';
 
 import { auth, googleProvider, gitHubProvider } from '../libs/firebase'
+import { useRouter } from 'next/router';
 
 interface AuthProviderProps {
   children: ReactNode
@@ -23,11 +24,15 @@ interface AuthContextData {
   signInWithGitHub: () => Promise<void>
   signUp: (email: string, password: string) => Promise<void>
   signInWithEmail: (email: string, password: string) => Promise<void>
+  loading: boolean
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 
 export function AuthProvider({ children }: AuthProviderProps) {
+  const [loading, setLoading] = useState(false)
+
+  const router = useRouter()
 
   const notifyEmailAlreadyExists = () => toast.warn("Email já cadastrado!", {
     closeOnClick: true,
@@ -40,6 +45,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
   })
 
   const notifyInvalidPassword = () => toast.warn("A senha deve ter mais de 6 caracteres!", {
+    closeOnClick: true,
+    pauseOnHover: true,
+  })
+
+  const notifyCreatedAccount = () => toast.success("Conta criada com sucesso!", {
     closeOnClick: true,
     pauseOnHover: true,
   })
@@ -72,9 +82,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     return await createUserWithEmailAndPassword(auth, email, password).then(userCredential => {
       const user = userCredential.user
 
-      console.log(user)
-
-
+      notifyCreatedAccount()
+      router.push('/')
 
     }).catch(error => {
       console.log(error.code)
@@ -86,28 +95,36 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   async function signInWithEmail(email: string, password: string) {
+    setLoading(true)
+
+
     signInWithEmailAndPassword(auth, email, password).then(userCredential => {
       const user = userCredential.user
 
+      if (user) {
+        setTimeout(() => {
+          setLoading(false)
 
+        }, 3000)
+      }
 
-      console.log(user)
 
     }).catch(error => {
       console.log(error.code)
+      setLoading(false)
 
       if (password.length < 6) {
         return notifyInvalidPassword()
       }
 
-      if (error.code === 'auth/invalid-email' || error.code === 'auth/wrong-password') {
+      if (error.code === 'auth/invalid-email' || error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
         return notifyEmailOrPasswordInvalid()
       }
     })
   }
 
   return (
-    <AuthContext.Provider value={{ signInWithGoogle, signInWithGitHub, signUp, signInWithEmail }} >
+    <AuthContext.Provider value={{ signInWithGoogle, signInWithGitHub, signUp, signInWithEmail, loading }} >
       {children}
     </AuthContext.Provider>
   )

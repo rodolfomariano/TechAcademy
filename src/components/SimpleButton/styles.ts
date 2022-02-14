@@ -11,7 +11,16 @@ export const Container = styled.button`
   border-radius: .5rem;
   transition: filter 300ms;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   &:hover {
     filter: brightness(.8);
+  }
+
+  &:disabled {
+    opacity: .5;
+    cursor: not-allowed;
   }
 `

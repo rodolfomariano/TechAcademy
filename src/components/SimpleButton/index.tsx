@@ -1,4 +1,7 @@
 import { ButtonHTMLAttributes } from 'react'
+import { Oval } from 'react-loader-spinner'
+
+import { useFirebaseAuth } from '../../hooks/auth'
 
 import {
   Container
@@ -9,9 +12,15 @@ interface SimpleButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export function SimpleButton({ title, ...rest }: SimpleButtonProps) {
+  const { loading } = useFirebaseAuth()
+
   return (
     <Container {...rest}>
-      {title}
+      {loading
+        ? <Oval width='20' height='20' color='blue' />
+        : title
+      }
+
     </Container>
   )
 }

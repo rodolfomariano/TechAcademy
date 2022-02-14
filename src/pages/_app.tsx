@@ -4,6 +4,8 @@ import type { AppProps } from 'next/app'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+
 import { AuthProvider } from '../hooks/auth'
 
 
