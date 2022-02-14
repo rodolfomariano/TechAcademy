@@ -27,13 +27,13 @@ import {
   DividerText,
   SocialButtonContainer
 } from '../styles/home'
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 
 const Home: NextPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const { signInWithGoogle, signInWithGitHub, signInWithEmail, loading } = useFirebaseAuth()
+  const { signInWithGoogle, signInWithGitHub, signInWithEmail, loading, user, authObserver } = useFirebaseAuth()
 
   const router = useRouter()
 
@@ -48,6 +48,13 @@ const Home: NextPage = () => {
     signInWithEmail(email, password)
   }
 
+  useEffect(() => {
+    authObserver()
+
+    if (user.id) {
+      router.push('dashboard')
+    }
+  }, [user])
 
   return (
     <Container>

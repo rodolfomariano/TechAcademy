@@ -9,7 +9,9 @@ import {
   OAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  getAuth
+  getAuth,
+  onAuthStateChanged,
+  signOut
 } from 'firebase/auth';
 
 import { auth, googleProvider, gitHubProvider } from '../libs/firebase'
@@ -19,17 +21,29 @@ interface AuthProviderProps {
   children: ReactNode
 }
 
+interface User {
+  id: string | null
+  name: string | null
+  email: string | null
+  avatar: string | null
+  provider: string | null
+}
+
 interface AuthContextData {
   signInWithGoogle: () => Promise<void>
   signInWithGitHub: () => Promise<void>
   signUp: (email: string, password: string) => Promise<void>
   signInWithEmail: (email: string, password: string) => Promise<void>
+  authObserver: () => Promise<void>
+  userSignOut: () => Promise<void>
   loading: boolean
+  user: User
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 
 export function AuthProvider({ children }: AuthProviderProps) {
+  const [user, setUser] = useState<User>({} as User)
   const [loading, setLoading] = useState(false)
 
   const router = useRouter()
@@ -61,7 +75,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         const token = credential.accessToken
         const user = result.user
 
-        console.log(user)
+        router.push('dashboard')
 
       }).catch(error => console.log(error))
   }
@@ -73,7 +87,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         const token = credential.accessToken
         const user = result.user
 
-        console.log(user)
+        router.push('dashboard')
 
       }).catch(error => console.log(error))
   }
@@ -105,6 +119,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setTimeout(() => {
           setLoading(false)
 
+          router.push('dashboard')
+
         }, 3000)
       }
 
@@ -123,8 +139,46 @@ export function AuthProvider({ children }: AuthProviderProps) {
     })
   }
 
+  async function authObserver() {
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        const uid = user.uid
+
+        setUser({
+          id: user.uid,
+          name: user.displayName,
+          email: user.email,
+          avatar: user.photoURL,
+          // @ts-ignore
+          provider: user.auth.currentUser.providerData[0].providerId
+        })
+
+        console.log(user)
+      } else {
+
+      }
+    })
+  }
+
+  async function userSignOut() {
+    signOut(auth).then(() => {
+
+      setUser({
+        id: '',
+        name: '',
+        email: '',
+        avatar: '',
+        // @ts-ignore
+        provider: ''
+      })
+
+      router.push('/')
+
+    }).catch(error => console.log(error))
+  }
+
   return (
-    <AuthContext.Provider value={{ signInWithGoogle, signInWithGitHub, signUp, signInWithEmail, loading }} >
+    <AuthContext.Provider value={{ signInWithGoogle, signInWithGitHub, signUp, signInWithEmail, loading, authObserver, userSignOut, user }} >
       {children}
     </AuthContext.Provider>
   )
