@@ -48,13 +48,16 @@ const Home: NextPage = () => {
     signInWithEmail(email, password)
   }
 
-  useEffect(() => {
-    authObserver()
+  // useEffect(() => {
+  //   authObserver()
 
-    if (user.id) {
-      router.push('dashboard')
-    }
-  }, [user])
+  //   if (user.id) {
+  //     setTimeout(() => {
+  //       router.push('dashboard')
+
+  //     }, 2000)
+  //   }
+  // }, [user])
 
   return (
     <Container>

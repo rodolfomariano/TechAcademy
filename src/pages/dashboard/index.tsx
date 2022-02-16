@@ -5,6 +5,7 @@ import { useFirebaseAuth } from '../../hooks/auth'
 import {
   Container
 } from './styles'
+import { TopBar } from '../../components/TopBar'
 
 export default function Dashboard() {
 
@@ -13,18 +14,14 @@ export default function Dashboard() {
   const router = useRouter()
 
 
-  useEffect(() => {
-    authObserver()
 
-    !user.id && router.push('/')
-
-  }, [])
 
   return (
     <Container>
+      <TopBar />
       <h1>Dashboard</h1>
 
-      <h3>{user.id && user.email}</h3>
+      <h3>{user.id && user.name}</h3>
 
       <button
         onClick={userSignOut}

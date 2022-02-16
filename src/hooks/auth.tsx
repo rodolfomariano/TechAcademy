@@ -11,7 +11,9 @@ import {
   signInWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
-  signOut
+  signOut,
+  updateProfile,
+  sendEmailVerification,
 } from 'firebase/auth';
 
 import { auth, googleProvider, gitHubProvider } from '../libs/firebase'
@@ -32,7 +34,7 @@ interface User {
 interface AuthContextData {
   signInWithGoogle: () => Promise<void>
   signInWithGitHub: () => Promise<void>
-  signUp: (email: string, password: string) => Promise<void>
+  signUp: (email: string, password: string, name: string) => Promise<void>
   signInWithEmail: (email: string, password: string) => Promise<void>
   authObserver: () => Promise<void>
   userSignOut: () => Promise<void>
@@ -92,9 +94,23 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }).catch(error => console.log(error))
   }
 
-  async function signUp(email: string, password: string) {
+  async function signUp(email: string, password: string, name: string) {
+
+
     return await createUserWithEmailAndPassword(auth, email, password).then(userCredential => {
       const user = userCredential.user
+
+      const avatar = 'https://firebasestorage.googleapis.com/v0/b/techacademy-beeff.appspot.com/o/user_icon-icons.com_66546.svg?alt=media&token=ea6a20d6-d3ab-4394-a492-88334f646fea'
+
+      updateProfile(user, {
+        displayName: name,
+        photoURL: avatar
+      })
+
+      sendEmailVerification(user).then(() => {
+
+      })
+
 
       notifyCreatedAccount()
       router.push('/')
@@ -106,6 +122,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
 
     })
+
   }
 
   async function signInWithEmail(email: string, password: string) {
@@ -153,7 +170,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
           provider: user.auth.currentUser.providerData[0].providerId
         })
 
-        console.log(user)
       } else {
 
       }

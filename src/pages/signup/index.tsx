@@ -96,7 +96,7 @@ export default function Signup() {
     setFormError({ type: 'success', message: '' })
 
     try {
-      signUp(email, password)
+      signUp(email, password, name)
 
     } catch (error) {
       console.log(error)
