@@ -4,12 +4,21 @@ export const Container = styled.div`
   width: 100%;
   height: 50px;
   background-color: var(--primary);
-  padding: 0 1rem;
 
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+`
 
+export const Content = styled.div`
+  width: 100%;
+  max-width: 1330px;
+  padding: 0 1rem;
+  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
   #logo {
     width: 200px;
   }

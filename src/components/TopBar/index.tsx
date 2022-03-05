@@ -11,11 +11,13 @@ import {
   ActionContainer,
   NotificationButton,
   UserAvatar,
-  Avatar
+  Avatar,
+  Content
 } from './styles'
 
 export function TopBar() {
-  const { user, authObserver } = useFirebaseAuth()
+  const { user, authObserver, userSignOut } = useFirebaseAuth()
+
 
   console.log(user.avatar)
 
@@ -25,20 +27,28 @@ export function TopBar() {
 
   return (
     <Container>
-      <Logo id='logo' />
+      <Content>
+        <Logo id='logo' />
 
-      <ActionContainer>
-        <NotificationButton>
-          <FaBell size={20} />
-        </NotificationButton>
+        <ActionContainer>
+          <NotificationButton>
+            <FaBell size={20} />
+          </NotificationButton>
 
-        <UserAvatar>
-          {user.avatar && <img id='avatar' src={user.avatar} alt='Avatar do usuario' />}
+          <UserAvatar>
+            {user.avatar && <img id='avatar' src={user.avatar} alt='Avatar do usuario' />}
 
+            {/* <h1>Dashboard</h1>
 
+            <h3>{user.id && user.name}</h3>
 
-        </UserAvatar>
-      </ActionContainer>
+            <button
+              onClick={userSignOut}
+            >Sair</button> */}
+          </UserAvatar>
+        </ActionContainer>
+
+      </Content>
 
     </Container>
   )

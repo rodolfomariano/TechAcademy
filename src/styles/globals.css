@@ -16,7 +16,7 @@
   --blue: #6C63FF;
 
   --divider-color: rgba(0, 0, 0, .2);
-  --inactive-button-color: rgba(112, 120, 134, .7);
+  --inactive-button-color: rgba(112, 120, 134, 0.702);
   --background-color-bar: rgba(92, 177, 206, .2);
 
   --gray-50: #ECECF4;
