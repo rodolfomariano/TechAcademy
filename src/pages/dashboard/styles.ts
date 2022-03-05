@@ -157,10 +157,30 @@ export const SelectedTechnologiesContainer = styled.div`
   /* background-color: blue; */
 `
 
+export const TechnologiesContainerHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+
 export const TechnologiesSelected = styled.h2`
   color: var(--gray-500);
   font-size: 1.25rem;
   font-weight: 400;
+`
+
+export const ClearTechnologiesToStudyButton = styled.button`
+  border: none;
+  color: var(--gray-500);
+  padding: .25rem 1rem;
+  background-color: var(--red-transparent);
+  font-size: 14px;
+  border-radius: .25rem;
+  transition: filter 300ms;
+
+  &:hover {
+    filter: brightness(.9);
+  }
 `
 
 export const SelectedTechnologiesContent = styled.div`
@@ -169,6 +189,62 @@ export const SelectedTechnologiesContent = styled.div`
   background-color: var(--gray-50);
   margin-top: 1rem;
   margin-bottom: 1rem;
+  padding: 1.5rem 1rem;
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`
+
+
+
+export const SelectedTechnologyCard = styled.div`
+  background-color: var(--background-color);
+  border-radius: .5rem;
+  transition: box-shadow 300ms;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &:hover {
+    box-shadow: 0 0 8px var(--gray-200);
+  }
+`
+
+export const CardContent = styled.div`
+  display: flex;
+`
+
+export const CardIcon = styled.div`
+  width: 80px;
+  height: 80px;
+  border-top-left-radius: .5rem;
+  border-bottom-left-radius: .5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+export const CardDescription = styled.div`
+  margin-left: 1rem;
+  padding: .5rem 0;
+`
+
+export const CardTitle = styled.h2`
+  font-size: 1.25rem;
+  color: var(--gray-600);
+`
+
+export const CardRemoveButton = styled.button`
+  margin-right: 1rem;
+  color: var(--red);
+  background: transparent;
+  border: none;
+  border-top-right-radius: .5rem;
+  border-bottom-right-radius: .5rem;
 `
 
 export const ContinueButton = styled.button`

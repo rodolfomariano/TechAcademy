@@ -2,14 +2,13 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
+import { FiTrash } from 'react-icons/fi'
+
 import { useFirebaseAuth } from '../../hooks/auth'
 import { TopBar } from '../../components/TopBar'
-import { DiJavascript1, DiHtml5, DiCss3, DiAngularSimple, DiReact, DiNodejs, DiJava, DiPython, DiPhp, DiSwift, DiIonic } from 'react-icons/di'
-import { FaVuejs, FaSass } from 'react-icons/fa'
-import { SiNestjs, SiCsharp, SiElixir, SiKotlin, SiXamarin } from 'react-icons/si'
-import { GrGolang } from 'react-icons/gr'
-import { RiFlutterFill } from 'react-icons/ri'
-import { AiFillAndroid } from 'react-icons/ai'
+
+import { frontendData, backendData, mobileData } from '../../services/technologies'
+
 
 import {
   Container,
@@ -21,17 +20,26 @@ import {
   TechnologyTypeButton,
   SpanTechnologySelected,
   TechnologiesContainer,
+  TechnologiesContainerHeader,
+  ClearTechnologiesToStudyButton,
   TechnologyContent,
   TechnologyButton,
   AttentionPhrase,
   TechnologiesSelected,
   SelectedTechnologiesContent,
   ContinueButton,
+  SelectedTechnologyCard,
+  CardContent,
+  CardIcon,
+  CardDescription,
+  CardTitle,
+  CardRemoveButton,
 } from './styles'
 
 export default function Dashboard() {
   const [technologyType, setTechnologyType] = useState('')
   const [technologySelectedBar, setTechnologySelectedBar] = useState(0)
+  const [technologiesToStudy, setTechnologiesToStudy] = useState<string[]>([])
 
   const router = useRouter()
 
@@ -43,6 +51,14 @@ export default function Dashboard() {
     type === 'mobile' && setTechnologySelectedBar(66)
   }
 
+  function handleAddTechnologyToStudy(item: string) {
+    setTechnologiesToStudy([...technologiesToStudy, item])
+  }
+
+  function handleRemoveTechnologyToStudy(item: string) {
+    const removeItem = technologiesToStudy.filter(tech => tech !== item)
+    setTechnologiesToStudy([...removeItem])
+  }
 
   return (
     <Container>
@@ -83,13 +99,20 @@ export default function Dashboard() {
                   : technologyType === 'backend' ? '-66%' : '-99%'
               }}
             >
-              <TechnologyButton id='zero'><DiHtml5 size={32} color='#FFF' /></TechnologyButton>
-              <TechnologyButton id='one'><DiCss3 size={32} color='#FFF' /></TechnologyButton>
-              <TechnologyButton id='two'><FaVuejs size={32} color='#FFF' /></TechnologyButton>
-              <TechnologyButton id='three'><FaSass size={32} color='#FFF' /></TechnologyButton>
-              <TechnologyButton id='four'><DiAngularSimple size={32} color='#FFF' /></TechnologyButton>
-              <TechnologyButton id='five'><DiReact size={32} color='#FFF' /></TechnologyButton>
-              <TechnologyButton id='six'><DiJavascript1 size={32} color='#FFF' /></TechnologyButton>
+              {frontendData.map(item => {
+                const haveItem = technologiesToStudy.find(tech => tech === item.name)
+
+                return (
+                  <TechnologyButton
+                    key={item.id}
+                    id={item.id}
+                    onClick={() => haveItem ? handleRemoveTechnologyToStudy(item.name) : handleAddTechnologyToStudy(item.name)}
+                    style={{ backgroundColor: haveItem && item.bgColor }}
+                  >
+                    {item.icon}
+                  </TechnologyButton>
+                )
+              })}
             </TechnologyContent>
 
             <TechnologyContent
@@ -100,26 +123,40 @@ export default function Dashboard() {
                   : technologyType === 'mobile' ? '-180%' : '33%'
               }}
             >
-              <TechnologyButton id='zero'><DiJava size={32} color='#FFF' /></TechnologyButton>
-              <TechnologyButton id='one' style={{ color: '#FFF', fontWeight: 600 }}>GO</TechnologyButton>
-              <TechnologyButton id='two'><SiCsharp size={32} color='#FFF' /></TechnologyButton>
-              <TechnologyButton id='three'><DiPython size={32} color='#FFF' /></TechnologyButton>
-              <TechnologyButton id='four'><DiPhp size={40} color='#FFF' /></TechnologyButton>
-              <TechnologyButton id='five'><SiElixir size={32} color='#FFF' /></TechnologyButton>
-              <TechnologyButton id='six'><DiNodejs size={48} color='#FFF' /></TechnologyButton>
+              {backendData.map(item => {
+                const haveItem = technologiesToStudy.find(tech => tech === item.name)
+
+                return (
+                  <TechnologyButton
+                    key={item.id}
+                    id={item.id}
+                    onClick={() => haveItem ? handleRemoveTechnologyToStudy(item.name) : handleAddTechnologyToStudy(item.name)}
+                    style={{ backgroundColor: haveItem && item.bgColor }}
+                  >
+                    {item.icon}
+                  </TechnologyButton>
+                )
+              })}
             </TechnologyContent>
 
             <TechnologyContent
               id='backend'
               style={{ left: technologyType === 'mobile' ? '-66%' : '33%' }}
             >
-              <TechnologyButton id='zero'><RiFlutterFill size={32} color='#FFF' /></TechnologyButton>
-              <TechnologyButton id='one'><SiKotlin size={24} color='#FFF' /></TechnologyButton>
-              <TechnologyButton id='two'><AiFillAndroid size={24} color='#FFF' /></TechnologyButton>
-              <TechnologyButton id='three'><DiSwift size={24} color='#FFF' /></TechnologyButton>
-              <TechnologyButton id='four'><DiIonic size={48} color='#FFF' /></TechnologyButton>
-              <TechnologyButton id='five'><SiXamarin size={24} color='#FFF' /></TechnologyButton>
-              <TechnologyButton id='six'><DiReact size={48} color='#FFF' /></TechnologyButton>
+              {mobileData.map(item => {
+                const haveItem = technologiesToStudy.find(tech => tech === item.name)
+
+                return (
+                  <TechnologyButton
+                    key={item.id}
+                    id={item.id}
+                    onClick={() => haveItem ? handleRemoveTechnologyToStudy(item.name) : handleAddTechnologyToStudy(item.name)}
+                    style={{ backgroundColor: haveItem && item.bgColor }}
+                  >
+                    {item.icon}
+                  </TechnologyButton>
+                )
+              })}
             </TechnologyContent>
           </TechnologiesContainer>
 
@@ -132,10 +169,56 @@ export default function Dashboard() {
         </SelectTechnologyContainer>
 
         <SelectedTechnologiesContainer>
-          <TechnologiesSelected>Você selecionou 2 tecnologias</TechnologiesSelected>
+          <TechnologiesContainerHeader>
+            <TechnologiesSelected>
+              {technologiesToStudy.length === 0
+                ? 'Nenhuma tecnologia selecionada'
+                : technologiesToStudy.length === 1
+                  ? `Você selecionou 1 tecnologia`
+                  : `Você selecionou ${technologiesToStudy.length} tecnologias`
+              }
+            </TechnologiesSelected>
+
+            <ClearTechnologiesToStudyButton
+              onClick={() => setTechnologiesToStudy([])}
+            >
+              Limpar
+            </ClearTechnologiesToStudyButton>
+          </TechnologiesContainerHeader>
 
           <SelectedTechnologiesContent>
+            {
+              technologiesToStudy.map(item => {
+                const findFrontendTechnology = frontendData.find(tech => tech.name === item)
+                const findBackendTechnology = backendData.find(tech => tech.name === item)
+                const findMobileTechnology = mobileData.find(tech => tech.name === item)
 
+                return (
+
+                  <SelectedTechnologyCard key={item}>
+                    <CardContent>
+                      <CardIcon style={{ backgroundColor: findFrontendTechnology?.bgColor || findBackendTechnology?.bgColor || findMobileTechnology?.bgColor }}>
+                        {findFrontendTechnology?.icon || findBackendTechnology?.icon || findMobileTechnology?.icon}
+                      </CardIcon>
+
+                      <CardDescription>
+                        <CardTitle>{findFrontendTechnology?.title || findBackendTechnology?.title || findMobileTechnology?.title}</CardTitle>
+                      </CardDescription>
+
+                    </CardContent>
+
+                    <CardRemoveButton
+                      onClick={() => handleRemoveTechnologyToStudy(item)}
+                    >
+                      <FiTrash size={20} />
+                    </CardRemoveButton>
+                  </SelectedTechnologyCard>
+                )
+              }
+
+
+              )
+            }
           </SelectedTechnologiesContent>
 
           <ContinueButton>
